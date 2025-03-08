@@ -1,6 +1,3 @@
-Here’s a **well-structured, professional, and visually appealing README** for your **AI Task Automation** project:  
-
----
 
 ### **🛠️ AI-Powered Task Automation**  
 🚀 **Automate tasks effortlessly using voice & text commands!**  
