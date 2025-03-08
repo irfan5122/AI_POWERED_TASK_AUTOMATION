@@ -2,7 +2,7 @@
 ### **🛠️ AI-Powered Task Automation**  
 🚀 **Automate tasks effortlessly using voice & text commands!**  
 
-![GitHub Repo Stars](https://img.shields.io/github/stars/yourusername/AI-task-automation?style=social)  
+![GitHub Repo Stars](https://github.com/irfan5122/AI_POWERED_TASK_AUTOMATION)  
 ![GitHub forks](https://img.shields.io/github/forks/yourusername/AI-task-automation?style=social)  
 ![GitHub license](https://img.shields.io/github/license/yourusername/AI-task-automation)  
 
