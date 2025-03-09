@@ -42,8 +42,7 @@ This **AI-powered Windows application** automates daily tasks using **voice and 
 ## **📦 Installation & Usage**  
 ### **🔹 Clone the Repository**  
 ```bash
-git clone https://github.com/yourusername/AI-task-automation.git
-cd AI-task-automation
+git clone https://github.com/irfan5122/AI_POWERED_TASK_AUTOMATION.git
 ```
 ### **🔹 Install Dependencies**  
 ```bash
@@ -77,6 +76,4 @@ This project is licensed under the **MIT License** – see the [LICENSE](LICENSE
 
 ### **⭐ If you find this project useful, don’t forget to give it a star! ⭐**  
 
----
 
-This **README** is clean, structured, and **GitHub-friendly**! Let me know if you need modifications! 🚀
