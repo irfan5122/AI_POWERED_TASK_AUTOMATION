@@ -1,1 +1,1 @@
-pip install PyQt6
+PyQt6
