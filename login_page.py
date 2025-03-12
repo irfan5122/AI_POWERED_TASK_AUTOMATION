@@ -98,14 +98,39 @@ class LoginWindow(QWidget):
         )
 
     def on_login(self):
-        username = self.username_input.text().strip()
-        password = self.password_input.text().strip()
+        username_box = self.username_input.text().strip()
+        password_box = self.password_input.text().strip()
 
-        if username and password:
-            print(f"Login Successful: Username - {username}, Password - {password}")
+        if username_box and password_box:
+            credentials = {}
+            username, password = None, None
+            nofile = False
 
+            try:
+                with open("user_data.apta", "r") as file:
+                    for line in file:
+                        username, password = line.strip().split(",")
+                        credentials["username"] = username
+                        credentials["password"] = password
+            except FileNotFoundError:
+                nofile = True
+
+            if not nofile:
+                if username_box == username and password_box == password:
+                    print("Logged in Successfully")
+
+                    from main import ModernAdvancedUI
+                    self.new_window = ModernAdvancedUI()  # Store the new window as an instance variable
+                    self.new_window.show()
+
+                    self.hide()  # Hide login window instead of closing it
+                else:
+                    QMessageBox.warning(self, "Login Failed", "Incorrect Username or Password")
+            else:
+                QMessageBox.warning(self, "Warning", "Account Does Not Exist!")
         else:
-            print("Please enter both username and password!")
+            QMessageBox.warning(self, "Warning", "Please enter both username and password!")
+
 
     def on_signup(self):
         """ Open the Create Account window """
@@ -208,12 +233,18 @@ class SignupWindow(QWidget):
         password = self.password_input.text().strip()
 
         if username and password:
-            print(f"Account Created: Username - {username}, Password - {password}")
+            #print(f"Account Created: Username - {username}, Password - {password}")
 
             filename = "user_data.apta"
             if not os.path.exists(filename):
                 with open("user_data.apta",'w') as data:
                     data.write(f"{username},{password}")
+                msg_box = QMessageBox()
+                msg_box.setWindowTitle("Account Created")
+                msg_box.setText("Account Created Successfully")
+                msg_box.setIcon(QMessageBox.Icon.Information)
+                msg_box.setStandardButtons(QMessageBox.StandardButton.Ok)
+                msg_box.exec()
 
             else:
                 msg_box = QMessageBox() 
