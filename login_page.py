@@ -1,6 +1,7 @@
 import sys
+import os
 from PyQt6.QtWidgets import (
-    QApplication, QWidget, QLabel, QLineEdit, QPushButton, QVBoxLayout, QHBoxLayout
+    QApplication, QWidget, QLabel, QLineEdit, QPushButton, QVBoxLayout, QHBoxLayout, QMessageBox
 )
 from PyQt6.QtGui import QFont, QColor, QGuiApplication
 from PyQt6.QtCore import Qt
@@ -102,6 +103,7 @@ class LoginWindow(QWidget):
 
         if username and password:
             print(f"Login Successful: Username - {username}, Password - {password}")
+
         else:
             print("Please enter both username and password!")
 
@@ -207,6 +209,19 @@ class SignupWindow(QWidget):
 
         if username and password:
             print(f"Account Created: Username - {username}, Password - {password}")
+
+            filename = "user_data.apta"
+            if not os.path.exists(filename):
+                with open("user_data.apta",'w') as data:
+                    data.write(f"{username},{password}")
+
+            else:
+                msg_box = QMessageBox() 
+                msg_box.setWindowTitle("WARNING")  
+                msg_box.setText("Account Already Exists !") 
+                msg_box.setIcon(QMessageBox.Icon.Information)  
+                msg_box.setStandardButtons(QMessageBox.StandardButton.Ok)
+                msg_box.exec()
             self.go_back()
         else:
             print("Please enter both username and password!")
