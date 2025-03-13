@@ -1,3 +1,6 @@
 import os
-def create():
-	print("Hello")
+def create_file(filename):
+	os.system(f"nul> {filename}")
+
+
+	

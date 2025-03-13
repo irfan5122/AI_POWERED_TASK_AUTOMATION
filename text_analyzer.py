@@ -2,6 +2,23 @@ import spacy
 
 nlp = spacy.load("en_core_web_trf")
 
+
+def execute_comands(actions, objects, file_names, write_content):
+    print(actions)
+    print(objects)
+    print(file_names)
+    print(write_content)
+    try:
+        if actions[0] == "create":
+            from lib_automata import creator
+            creator.create_file("test_create.txt")
+
+    except Exception:
+        print(actions," - EMPTY")
+
+
+
+
 def extract_write_content(doc, index):
     """Extracts content written after the 'write' command."""
     content = ""
@@ -50,13 +67,20 @@ def process_command(text):
     # Ensure filenames are not classified as objects
     objects = [obj for obj in objects if obj not in file_names]
 
+
+    execute_comands(actions, objects, file_names, write_content)
+
+
+
+
     return actions, objects, file_names, write_content
 
 # Example usage
-text = "create a file, write 'hello' to it then save it as greeting.txt and close it"
+'''text = "create a file, write 'hello' to it then save it as greeting.txt and close it"
 actions, objects, file_names, write_content = process_command(text)
 
 print("Actions:", actions)
 print("Objects:", objects)
 print("File Names:", file_names)
 print("Write Content:", write_content)
+'''
