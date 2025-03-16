@@ -9,8 +9,6 @@ def execute_commands(actions, objects, text):
     for action in actions:
         if action == "create":
             auto.create_file(text)
-
-
         elif action == "open":
             print("opening")
             print("Extracted objects:", objects)
@@ -18,49 +16,29 @@ def execute_commands(actions, objects, text):
                 auto.open_app(objects[0])
             else:
                 print("⚠ No object detected for 'open'")
-
         elif action == "delete":
-            auto.delete_file(text)
-
-
+            auto.delete_file()
         elif action == "search":
             if objects:
-                auto.search(objects[0])
+                auto.search_file(objects[0])
             else:
                 print("⚠ No object detected for 'search'")
 
-
-
-
 def process_command(data):
-    nlp = spacy.load("en_core_web_sm") 
-    doc = nlp(data)
+    nlp = spacy.load("en_core_web_trf")
+    print("pocessing command ...")
+    text = data
+    doc = nlp(text)
     actions = []
     objects = []
-    filename = None
-
-   
-    ACTION_WORDS = {"open", "search", "delete", "create"}
 
     for token in doc:
-        print(f"Token: {token.text}, POS: {token.pos_}, Dep: {token.dep_}")  
+        if token.pos_ == "VERB":
+            actions.append(token.lemma_)  # Extract actions
+        elif token.pos_ in ["NOUN", "PROPN"] or token.text.lower() in KNOWN_APPS:
+            objects.append(token.text)
 
-       
-        if token.text.lower() in ACTION_WORDS or token.pos_ == "VERB":
-            actions.append(token.lemma_.lower())
+    execute_commands(actions, objects, text)
 
-      
-        elif "." in token.text:
-            filename = token.text
-
-      
-        elif token.dep_ in ["dobj", "pobj", "attr", "nmod"] or token.pos_ in ["NOUN", "PROPN"]:
-            objects.append(token.text.lower())
-
-    if filename:
-        objects.append(filename)  
-
-    print(f"📌 Extracted Actions: {actions}")
-    print(f"📌 Extracted Objects: {objects}")
-    execute_commands(actions, objects, data)
+    print("command processed 😌")
     return actions, objects

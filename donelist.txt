@@ -1,0 +1,5 @@
+create
+delete
+opening apps
+searching
+encryption

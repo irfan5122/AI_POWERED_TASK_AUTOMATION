@@ -121,7 +121,7 @@ class ModernAdvancedUI(QWidget):
             print(f"📌 Task Received: {message}")
             import text_analyzer
 
-            actions, objects, file_names, write_content = text_analyzer.process_command(message)
+            actions, objects = text_analyzer.process_command(message)
 
 
         else:

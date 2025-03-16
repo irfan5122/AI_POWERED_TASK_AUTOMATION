@@ -1,5 +1,6 @@
 import sys
 import os
+from enc_dec import encrypt_file, decrypt_file
 from PyQt6.QtWidgets import (
     QApplication, QWidget, QLabel, QLineEdit, QPushButton, QVBoxLayout, QHBoxLayout, QMessageBox
 )
@@ -101,17 +102,22 @@ class LoginWindow(QWidget):
         username_box = self.username_input.text().strip()
         password_box = self.password_input.text().strip()
 
+        if os.path.exists("user_data.apta"):
+            print("run decrypt")
+            decrypt_file()
+
         if username_box and password_box:
             credentials = {}
             username, password = None, None
             nofile = False
 
             try:
-                with open("user_data.apta", "r") as file:
+                with open("user_data", "r") as file:
                     for line in file:
                         username, password = line.strip().split(",")
                         credentials["username"] = username
                         credentials["password"] = password
+                os.remove("user_data")
             except FileNotFoundError:
                 nofile = True
 
@@ -237,8 +243,9 @@ class SignupWindow(QWidget):
 
             filename = "user_data.apta"
             if not os.path.exists(filename):
-                with open("user_data.apta",'w') as data:
+                with open("user_data",'w') as data:
                     data.write(f"{username},{password}")
+                encrypt_file()
                 msg_box = QMessageBox()
                 msg_box.setWindowTitle("Account Created")
                 msg_box.setText("Account Created Successfully")
