@@ -34,7 +34,7 @@ This **AI-powered Windows application** automates daily tasks using **voice and 
 ## **🛠️ Tech Stack**  
 - **Python** 🐍  
 - **NLP for Command Recognition**  
-- **PyQt / Tkinter (GUI Framework)**  
+- **PyQt6**  
 - **Selenium for Web Automation**  
 
 ---
@@ -48,7 +48,7 @@ git clone https://github.com/irfan5122/AI_POWERED_TASK_AUTOMATION.git
 ```bash
 pip install -r requirements.txt
 ```
-### **🔹 Run the Application**  
+### **🔹 Run the Application on Python 3.11.4** 
 ```bash
 python main.py
 ```

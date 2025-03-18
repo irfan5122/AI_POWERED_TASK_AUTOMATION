@@ -1,0 +1,51 @@
+Python 3.11.4
+pip 24.0 from C:\Python\Lib\site-packages\pip (python 3.11)
+
+
+Name: spacy
+Version: 3.8.4
+Summary: Industrial-strength Natural Language Processing (NLP) in Python
+Home-page: https://spacy.io
+Author: Explosion
+Author-email: contact@explosion.ai
+License: MIT
+Location: C:\Python\Lib\site-packages
+Requires: catalogue, cymem, jinja2, langcodes, murmurhash, numpy, packaging, preshed, pydantic, requests, setuptools, spacy-legacy, spacy-loggers, srsly, thinc, tqdm, typer, wasabi, weasel
+Required-by:
+
+
+Name: cryptography
+Version: 44.0.2
+Summary: cryptography is a package which provides cryptographic recipes and primitives to Python developers.
+Home-page:
+Author: The cryptography developers <cryptography-dev@python.org>
+Author-email: The Python Cryptographic Authority and individual contributors <cryptography-dev@python.org>
+License: Apache-2.0 OR BSD-3-Clause
+Location: C:\Python\Lib\site-packages
+Requires: cffi
+Required-by:
+
+
+
+Name: PyQt6
+Version: 6.8.1
+Summary: Python bindings for the Qt cross platform application toolkit
+Home-page:
+Author:
+Author-email: Riverbank Computing Limited <info@riverbankcomputing.com>
+License: GPL v3
+Location: C:\Python\Lib\site-packages
+Requires: PyQt6-Qt6, PyQt6-sip
+Required-by:	
+
+
+Name: PyAutoGUI
+Version: 0.9.54
+Summary: PyAutoGUI lets Python control the mouse and keyboard, and other GUI automation tasks. For Windows, macOS, and Linux, on Python 3 and 2.
+Home-page: https://github.com/asweigart/pyautogui
+Author: Al Sweigart
+Author-email: al@inventwithpython.com
+License: BSD
+Location: C:\Python\Lib\site-packages
+Requires: mouseinfo, pygetwindow, pymsgbox, pyscreeze, pytweening
+Required-by: pywhatkit
