@@ -1,13 +1,17 @@
-import spacy
-import inspect
+import torch
+from transformers import pipeline
 import lib_automata.automate as auto
 
-KNOWN_APPS = {"chrome", "whatsapp", "filemanager", "brave", "weather", "store"}
+nlp = pipeline("fill-mask", model="distilroberta-base")
+
+
+ACTION_KEYWORDS = ["create", "open", "delete", "close", "launch", "remove", "start", "exit", "make", "erase"]
+
 
 def execute_commands(actions, objects, text):
     print("executing commands..")
     for action in actions:
-        if action == "create":
+        if action == "create" or "make":
             auto.create_file(text)
 
 
@@ -32,35 +36,38 @@ def execute_commands(actions, objects, text):
 
 
 
-def process_command(data):
-    nlp = spacy.load("en_core_web_sm") 
-    doc = nlp(data)
+def load_app_names(filename="objects.txt"):
+    try:
+        with open(filename, "r", encoding="utf-8") as file:
+            app_names = [line.strip().lower() for line in file if line.strip()]  
+        return app_names
+    except FileNotFoundError:
+        print("❌ Error: File not found!")
+        return []
+
+
+
+def process_command(text):
     actions = []
     objects = []
-    filename = None
+    words = text.split()
 
-   
-    ACTION_WORDS = {"open", "search", "delete", "create"}
-
-    for token in doc:
-        print(f"Token: {token.text}, POS: {token.pos_}, Dep: {token.dep_}")  
-
-       
-        if token.text.lower() in ACTION_WORDS or token.pos_ == "VERB":
-            actions.append(token.lemma_.lower())
-
-      
-        elif "." in token.text:
-            filename = token.text
-
-      
-        elif token.dep_ in ["dobj", "pobj", "attr", "nmod"] or token.pos_ in ["NOUN", "PROPN"]:
-            objects.append(token.text.lower())
-
-    if filename:
-        objects.append(filename)  
-
-    print(f"📌 Extracted Actions: {actions}")
-    print(f"📌 Extracted Objects: {objects}")
-    execute_commands(actions, objects, data)
+ 
+    for idx, word in enumerate(words):
+        if word.lower() in ACTION_KEYWORDS:
+            actions.append(word.lower())  
+            if idx + 1 < len(words):  
+                next_word = words[idx + 1].lower()
+                if next_word in KNOWN_OBJECTS:
+                    objects.append(next_word)  
+    execute_commands(actions,objects,text)
+    print("\n✅ Extracted Actions:", actions)
+    print("✅ Extracted Objects:", objects)
     return actions, objects
+
+
+
+KNOWN_OBJECTS = load_app_names()
+#actions, objects = process_command(cmd)
+
+
