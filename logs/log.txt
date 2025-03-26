@@ -1,0 +1,20 @@
+📌 Task Received: open whatsapp
+C:\Python\Lib\site-packages\transformers\utils\generic.py:311: FutureWarning: `torch.utils._pytree._register_pytree_node` is deprecated. Please use `torch.utils._pytree.register_pytree_node` instead.
+  torch.utils._pytree._register_pytree_node(
+Downloading config.json: 100%|████████████████████████████████████████████████████████████████| 480/480 [00:00<?, ?B/s]
+C:\Python\Lib\site-packages\huggingface_hub\file_download.py:133: UserWarning: `huggingface_hub` cache-system uses symlinks by default to efficiently store duplicated files but your machine does not support them in C:\Users\irfan\.cache\huggingface\hub. Caching files will still work but in a degraded version that might require more space on your disk. This warning can be disabled by setting the `HF_HUB_DISABLE_SYMLINKS_WARNING` environment variable. For more details, see https://huggingface.co/docs/huggingface_hub/how-to-cache#limitations.
+To support symlinks on Windows, you either need to activate Developer Mode or to run Python as an administrator. In order to see activate developer mode, see this article: https://docs.microsoft.com/en-us/windows/apps/get-started/enable-your-device-for-development
+  warnings.warn(message)
+Downloading model.safetensors: 100%|████████████████████████████████████████████████| 331M/331M [00:08<00:00, 37.3MB/s]
+Some weights of the model checkpoint at distilroberta-base were not used when initializing RobertaForMaskedLM: ['roberta.pooler.dense.weight', 'roberta.pooler.dense.bias']
+- This IS expected if you are initializing RobertaForMaskedLM from the checkpoint of a model trained on another task or with another architecture (e.g. initializing a BertForSequenceClassification model from a BertForPreTraining model).
+- This IS NOT expected if you are initializing RobertaForMaskedLM from the checkpoint of a model that you expect to be exactly identical (initializing a BertForSequenceClassification model from a BertForSequenceClassification model).
+Downloading tokenizer_config.json: 100%|████████████████████████████████████████████████████| 25.0/25.0 [00:00<?, ?B/s]
+Downloading vocab.json: 100%|███████████████████████████████████████████████████████| 899k/899k [00:00<00:00, 1.59MB/s]
+Downloading merges.txt: 100%|███████████████████████████████████████████████████████| 456k/456k [00:00<00:00, 1.08MB/s]
+Downloading tokenizer.json: 100%|█████████████████████████████████████████████████| 1.36M/1.36M [00:00<00:00, 2.25MB/s]
+executing commands..
+⚠ No filename found in text!
+
+✅ Extracted Actions: ['open']
+✅ Extracted Objects: ['whatsapp']

@@ -1,0 +1,433 @@
+Microsoft Windows [Version 10.0.22000.1936]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\irfan>pip install --no-build-iolation --no-cache-dir spacy
+
+Usage:
+  pip install [options] <requirement specifier> [package-index-options] ...
+  pip install [options] -r <requirements file> [package-index-options] ...
+  pip install [options] [-e] <vcs project url> ...
+  pip install [options] [-e] <local project path> ...
+  pip install [options] <archive url/path> ...
+
+no such option: --no-build-iolation
+
+C:\Users\irfan>pip install --no-build-isolation --no-cache-dir spacy
+Collecting spacy
+  Downloading spacy-3.8.2.tar.gz (1.3 MB)
+     ---------------------------------------- 1.3/1.3 MB 3.5 MB/s eta 0:00:00
+  Preparing metadata (pyproject.toml) ... error
+  error: subprocess-exited-with-error
+
+  × Preparing metadata (pyproject.toml) did not run successfully.
+  │ exit code: 1
+  ╰─> [17 lines of output]
+      Traceback (most recent call last):
+        File "C:\Users\irfan\AppData\Local\Programs\Python\Python313\Lib\site-packages\pip\_vendor\pyproject_hooks\_in_process\_in_process.py", line 389, in <module>
+          main()
+          ~~~~^^
+        File "C:\Users\irfan\AppData\Local\Programs\Python\Python313\Lib\site-packages\pip\_vendor\pyproject_hooks\_in_process\_in_process.py", line 373, in main
+          json_out["return_val"] = hook(**hook_input["kwargs"])
+                                   ~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+        File "C:\Users\irfan\AppData\Local\Programs\Python\Python313\Lib\site-packages\pip\_vendor\pyproject_hooks\_in_process\_in_process.py", line 175, in prepare_metadata_for_build_wheel
+          return hook(metadata_directory, config_settings)
+        File "C:\Users\irfan\AppData\Local\Programs\Python\Python313\Lib\site-packages\setuptools\build_meta.py", line 377, in prepare_metadata_for_build_wheel
+          self.run_setup()
+          ~~~~~~~~~~~~~~^^
+        File "C:\Users\irfan\AppData\Local\Programs\Python\Python313\Lib\site-packages\setuptools\build_meta.py", line 320, in run_setup
+          exec(code, locals())
+          ~~~~^^^^^^^^^^^^^^^^
+        File "<string>", line 4, in <module>
+      ModuleNotFoundError: No module named 'numpy'
+      [end of output]
+
+  note: This error originates from a subprocess, and is likely not a problem with pip.
+error: metadata-generation-failed
+
+× Encountered error while generating package metadata.
+╰─> See above for output.
+
+note: This is an issue with the package mentioned above, not pip.
+hint: See above for details.
+
+C:\Users\irfan>pip install cython
+Collecting cython
+  Using cached Cython-3.0.12-cp313-cp313-win_amd64.whl.metadata (3.6 kB)
+Using cached Cython-3.0.12-cp313-cp313-win_amd64.whl (2.8 MB)
+Installing collected packages: cython
+Successfully installed cython-3.0.12
+
+C:\Users\irfan>pip install --no-build-isolation --no-cache-dir spacy
+Collecting spacy
+  Downloading spacy-3.8.2.tar.gz (1.3 MB)
+     ---------------------------------------- 1.3/1.3 MB 372.0 kB/s eta 0:00:00
+  Preparing metadata (pyproject.toml) ... error
+  error: subprocess-exited-with-error
+
+  × Preparing metadata (pyproject.toml) did not run successfully.
+  │ exit code: 1
+  ╰─> [352 lines of output]
+
+      Error compiling Cython file:
+      ------------------------------------------------------------
+      ...
+      """Knowledge-base for entity or concept linking."""
+
+      from cymem.cymem cimport Pool
+      ^
+      ------------------------------------------------------------
+
+      spacy\kb\kb.pxd:3:0: 'cymem\cymem.pxd' not found
+
+      Error compiling Cython file:
+      ------------------------------------------------------------
+      ...
+      """Knowledge-base for entity or concept linking."""
+
+      from cymem.cymem cimport Pool
+      ^
+      ------------------------------------------------------------
+
+      spacy\kb\kb.pxd:3:0: 'cymem\cymem\Pool.pxd' not found
+
+      Error compiling Cython file:
+      ------------------------------------------------------------
+      ...
+      from cymem.cymem cimport Pool
+      from libcpp.vector cimport vector
+      from murmurhash.mrmr cimport hash64
+      ^
+      ------------------------------------------------------------
+
+      spacy\vocab.pxd:3:0: 'murmurhash\mrmr.pxd' not found
+
+      Error compiling Cython file:
+      ------------------------------------------------------------
+      ...
+      from cymem.cymem cimport Pool
+      from libcpp.vector cimport vector
+      from murmurhash.mrmr cimport hash64
+      ^
+      ------------------------------------------------------------
+
+      spacy\vocab.pxd:3:0: 'murmurhash\mrmr\hash64.pxd' not found
+
+      Error compiling Cython file:
+      ------------------------------------------------------------
+      ...
+      from cymem.cymem cimport Pool
+      from libcpp.vector cimport vector
+      from murmurhash.mrmr cimport hash64
+      from preshed.maps cimport PreshMap
+      ^
+      ------------------------------------------------------------
+
+      spacy\vocab.pxd:4:0: 'preshed\maps.pxd' not found
+
+      Error compiling Cython file:
+      ------------------------------------------------------------
+      ...
+      from cymem.cymem cimport Pool
+      from libcpp.vector cimport vector
+      from murmurhash.mrmr cimport hash64
+      from preshed.maps cimport PreshMap
+      ^
+      ------------------------------------------------------------
+
+      spacy\vocab.pxd:4:0: 'preshed\maps\PreshMap.pxd' not found
+
+      Error compiling Cython file:
+      ------------------------------------------------------------
+      ...
+          unsigned char[8] s
+          unsigned char* p
+
+
+      cdef class StringStore:
+          cdef Pool mem
+               ^
+      ------------------------------------------------------------
+
+      spacy\strings.pxd:23:9: 'Pool' is not a type identifier
+
+      Error compiling Cython file:
+      ------------------------------------------------------------
+      ...
+
+      cdef class StringStore:
+          cdef Pool mem
+
+          cdef vector[hash_t] keys
+          cdef public PreshMap _map
+                      ^
+      ------------------------------------------------------------
+
+      spacy\strings.pxd:26:16: 'PreshMap' is not a type identifier
+
+      Error compiling Cython file:
+      ------------------------------------------------------------
+      ...
+
+      cdef class StringStore:
+          cdef Pool mem
+
+          cdef vector[hash_t] keys
+          cdef public PreshMap _map
+                               ^
+      ------------------------------------------------------------
+
+      spacy\strings.pxd:26:25: C attribute of type '<error>' cannot be accessed from Python
+
+      Error compiling Cython file:
+      ------------------------------------------------------------
+      ...
+          cdef public PreshMap _map
+
+          cdef const Utf8Str* intern_unicode(self, str py_string, bint allow_transient)
+          cdef const Utf8Str* _intern_utf8(self, char* utf8_string, int length, hash_t* precalculated_hash, bint allow_transient)
+          cdef vector[hash_t] _transient_keys
+          cdef Pool _non_temp_mem
+               ^
+      ------------------------------------------------------------
+
+      spacy\strings.pxd:31:9: 'Pool' is not a type identifier
+
+      Error compiling Cython file:
+      ------------------------------------------------------------
+      ...
+      from .structs cimport MorphAnalysisC
+      from .typedefs cimport attr_t, hash_t
+
+
+      cdef class Morphology:
+          cdef readonly Pool mem
+                        ^
+      ------------------------------------------------------------
+
+      spacy\morphology.pxd:12:18: 'Pool' is not a type identifier
+
+      Error compiling Cython file:
+      ------------------------------------------------------------
+      ...
+      from .structs cimport MorphAnalysisC
+      from .typedefs cimport attr_t, hash_t
+
+
+      cdef class Morphology:
+          cdef readonly Pool mem
+                             ^
+      ------------------------------------------------------------
+
+      spacy\morphology.pxd:12:23: C attribute of type '<error>' cannot be accessed from Python
+
+      Error compiling Cython file:
+      ------------------------------------------------------------
+      ...
+
+
+      cdef class Morphology:
+          cdef readonly Pool mem
+          cdef readonly StringStore strings
+          cdef PreshMap tags  # Keyed by hash, value is pointer to tag
+               ^
+      ------------------------------------------------------------
+
+      spacy\morphology.pxd:14:9: 'PreshMap' is not a type identifier
+
+      Error compiling Cython file:
+      ------------------------------------------------------------
+      ...
+          bint is_lex
+          int length
+
+
+      cdef class Vocab:
+          cdef Pool mem
+               ^
+      ------------------------------------------------------------
+
+      spacy\vocab.pxd:27:9: 'Pool' is not a type identifier
+
+      Error compiling Cython file:
+      ------------------------------------------------------------
+      ...
+          cdef readonly int length
+          cdef public object _unused_object  # TODO remove in v4, see #9150
+          cdef public object lex_attr_getters
+          cdef public object cfg
+
+          cdef const LexemeC* get(self, Pool mem, str string) except NULL
+                                        ^
+      ------------------------------------------------------------
+
+      spacy\vocab.pxd:39:34: 'Pool' is not a type identifier
+
+      Error compiling Cython file:
+      ------------------------------------------------------------
+      ...
+          cdef public object _unused_object  # TODO remove in v4, see #9150
+          cdef public object lex_attr_getters
+          cdef public object cfg
+
+          cdef const LexemeC* get(self, Pool mem, str string) except NULL
+          cdef const LexemeC* get_by_orth(self, Pool mem, attr_t orth) except NULL
+                                                ^
+      ------------------------------------------------------------
+
+      spacy\vocab.pxd:40:42: 'Pool' is not a type identifier
+
+      Error compiling Cython file:
+      ------------------------------------------------------------
+      ...
+
+          cdef const LexemeC* get(self, Pool mem, str string) except NULL
+          cdef const LexemeC* get_by_orth(self, Pool mem, attr_t orth) except NULL
+          cdef const TokenC* make_fused_token(self, substrings) except NULL
+
+          cdef const LexemeC* _new_lexeme(self, Pool mem, str string) except NULL
+                                                ^
+      ------------------------------------------------------------
+
+      spacy\vocab.pxd:43:42: 'Pool' is not a type identifier
+
+      Error compiling Cython file:
+      ------------------------------------------------------------
+      ...
+          cdef const LexemeC* get_by_orth(self, Pool mem, attr_t orth) except NULL
+          cdef const TokenC* make_fused_token(self, substrings) except NULL
+
+          cdef const LexemeC* _new_lexeme(self, Pool mem, str string) except NULL
+          cdef int _add_lex_to_vocab(self, hash_t key, const LexemeC* lex, bint is_transient) except -1
+          cdef const LexemeC* _new_lexeme(self, Pool mem, str string) except NULL
+                                                ^
+      ------------------------------------------------------------
+
+      spacy\vocab.pxd:45:42: 'Pool' is not a type identifier
+
+      Error compiling Cython file:
+      ------------------------------------------------------------
+      ...
+
+          cdef const LexemeC* _new_lexeme(self, Pool mem, str string) except NULL
+          cdef int _add_lex_to_vocab(self, hash_t key, const LexemeC* lex, bint is_transient) except -1
+          cdef const LexemeC* _new_lexeme(self, Pool mem, str string) except NULL
+
+          cdef PreshMap _by_orth
+               ^
+      ------------------------------------------------------------
+
+      spacy\vocab.pxd:47:9: 'PreshMap' is not a type identifier
+
+      Error compiling Cython file:
+      ------------------------------------------------------------
+      ...
+          cdef const LexemeC* _new_lexeme(self, Pool mem, str string) except NULL
+          cdef int _add_lex_to_vocab(self, hash_t key, const LexemeC* lex, bint is_transient) except -1
+          cdef const LexemeC* _new_lexeme(self, Pool mem, str string) except NULL
+
+          cdef PreshMap _by_orth
+          cdef Pool _non_temp_mem
+               ^
+      ------------------------------------------------------------
+
+      spacy\vocab.pxd:48:9: 'Pool' is not a type identifier
+
+      Error compiling Cython file:
+      ------------------------------------------------------------
+      ...
+
+      from ..vocab cimport Vocab
+
+
+      cdef class KnowledgeBase:
+          cdef Pool mem
+               ^
+      ------------------------------------------------------------
+
+      spacy\kb\kb.pxd:10:9: 'Pool' is not a type identifier
+      Copied C:\Users\irfan\AppData\Local\Temp\pip-install-qxj5_r21\spacy_2362f788fe7742c0a2b9e9472ac837e0\setup.cfg -> C:\Users\irfan\AppData\Local\Temp\pip-install-qxj5_r21\spacy_2362f788fe7742c0a2b9e9472ac837e0\spacy\tests\package
+      Copied C:\Users\irfan\AppData\Local\Temp\pip-install-qxj5_r21\spacy_2362f788fe7742c0a2b9e9472ac837e0\pyproject.toml -> C:\Users\irfan\AppData\Local\Temp\pip-install-qxj5_r21\spacy_2362f788fe7742c0a2b9e9472ac837e0\spacy\tests\package
+      Cythonizing sources
+      Compiling spacy/matcher/levenshtein.pyx because it changed.
+      Compiling spacy/training/alignment_array.pyx because it changed.
+      Compiling spacy/training/example.pyx because it changed.
+      Compiling spacy/parts_of_speech.pyx because it changed.
+      Compiling spacy/strings.pyx because it changed.
+      Compiling spacy/lexeme.pyx because it changed.
+      Compiling spacy/vocab.pyx because it changed.
+      Compiling spacy/attrs.pyx because it changed.
+      Compiling spacy/kb/candidate.pyx because it changed.
+      Compiling spacy/kb/kb.pyx because it changed.
+      Compiling spacy/kb/kb_in_memory.pyx because it changed.
+      Compiling spacy/ml/parser_model.pyx because it changed.
+      Compiling spacy/morphology.pyx because it changed.
+      Compiling spacy/pipeline/dep_parser.pyx because it changed.
+      Compiling spacy/pipeline/_edit_tree_internals/edit_trees.pyx because it changed.
+      Compiling spacy/pipeline/morphologizer.pyx because it changed.
+      Compiling spacy/pipeline/multitask.pyx because it changed.
+      Compiling spacy/pipeline/ner.pyx because it changed.
+      Compiling spacy/pipeline/pipe.pyx because it changed.
+      Compiling spacy/pipeline/trainable_pipe.pyx because it changed.
+      Compiling spacy/pipeline/sentencizer.pyx because it changed.
+      Compiling spacy/pipeline/senter.pyx because it changed.
+      Compiling spacy/pipeline/tagger.pyx because it changed.
+      Compiling spacy/pipeline/transition_parser.pyx because it changed.
+      Compiling spacy/pipeline/_parser_internals/arc_eager.pyx because it changed.
+      Compiling spacy/pipeline/_parser_internals/ner.pyx because it changed.
+      Compiling spacy/pipeline/_parser_internals/nonproj.pyx because it changed.
+      Compiling spacy/pipeline/_parser_internals/_state.pyx because it changed.
+      Compiling spacy/pipeline/_parser_internals/stateclass.pyx because it changed.
+      Compiling spacy/pipeline/_parser_internals/transition_system.pyx because it changed.
+      Compiling spacy/pipeline/_parser_internals/_beam_utils.pyx because it changed.
+      Compiling spacy/tokenizer.pyx because it changed.
+      Compiling spacy/training/align.pyx because it changed.
+      Compiling spacy/training/gold_io.pyx because it changed.
+      Compiling spacy/tokens/doc.pyx because it changed.
+      Compiling spacy/tokens/span.pyx because it changed.
+      Compiling spacy/tokens/token.pyx because it changed.
+      Compiling spacy/tokens/span_group.pyx because it changed.
+      Compiling spacy/tokens/graph.pyx because it changed.
+      Compiling spacy/tokens/morphanalysis.pyx because it changed.
+      Compiling spacy/tokens/_retokenize.pyx because it changed.
+      Compiling spacy/matcher/matcher.pyx because it changed.
+      Compiling spacy/matcher/phrasematcher.pyx because it changed.
+      Compiling spacy/matcher/dependencymatcher.pyx because it changed.
+      Compiling spacy/symbols.pyx because it changed.
+      Compiling spacy/vectors.pyx because it changed.
+      [ 1/46] Cythonizing spacy/attrs.pyx
+      [ 2/46] Cythonizing spacy/kb/candidate.pyx
+      Traceback (most recent call last):
+        File "C:\Users\irfan\AppData\Local\Programs\Python\Python313\Lib\site-packages\pip\_vendor\pyproject_hooks\_in_process\_in_process.py", line 389, in <module>
+          main()
+          ~~~~^^
+        File "C:\Users\irfan\AppData\Local\Programs\Python\Python313\Lib\site-packages\pip\_vendor\pyproject_hooks\_in_process\_in_process.py", line 373, in main
+          json_out["return_val"] = hook(**hook_input["kwargs"])
+                                   ~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+        File "C:\Users\irfan\AppData\Local\Programs\Python\Python313\Lib\site-packages\pip\_vendor\pyproject_hooks\_in_process\_in_process.py", line 175, in prepare_metadata_for_build_wheel
+          return hook(metadata_directory, config_settings)
+        File "C:\Users\irfan\AppData\Local\Programs\Python\Python313\Lib\site-packages\setuptools\build_meta.py", line 377, in prepare_metadata_for_build_wheel
+          self.run_setup()
+          ~~~~~~~~~~~~~~^^
+        File "C:\Users\irfan\AppData\Local\Programs\Python\Python313\Lib\site-packages\setuptools\build_meta.py", line 320, in run_setup
+          exec(code, locals())
+          ~~~~^^^^^^^^^^^^^^^^
+        File "<string>", line 221, in <module>
+        File "<string>", line 208, in setup_package
+        File "C:\Users\irfan\AppData\Local\Programs\Python\Python313\Lib\site-packages\Cython\Build\Dependencies.py", line 1154, in cythonize
+          cythonize_one(*args)
+          ~~~~~~~~~~~~~^^^^^^^
+        File "C:\Users\irfan\AppData\Local\Programs\Python\Python313\Lib\site-packages\Cython\Build\Dependencies.py", line 1321, in cythonize_one
+          raise CompileError(None, pyx_file)
+      Cython.Compiler.Errors.CompileError: spacy/kb/candidate.pyx
+      [end of output]
+
+  note: This error originates from a subprocess, and is likely not a problem with pip.
+error: metadata-generation-failed
+
+× Encountered error while generating package metadata.
+╰─> See above for output.
+
+note: This is an issue with the package mentioned above, not pip.
+hint: See above for details.
+
+C:\Users\irfan>

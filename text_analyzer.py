@@ -11,9 +11,8 @@ ACTION_KEYWORDS = ["create", "open", "delete", "close", "launch", "remove", "sta
 def execute_commands(actions, objects, text):
     print("executing commands..")
     for action in actions:
-        if action == "create" or "make":
+        if action == "create" or action == "make":
             auto.create_file(text)
-
 
         elif action == "open":
             print("opening")
