@@ -5,7 +5,7 @@ import lib_automata.automate as auto
 nlp = pipeline("fill-mask", model="distilroberta-base")
 
 
-ACTION_KEYWORDS = ["create", "open", "delete", "close", "launch", "remove", "start", "exit", "make", "erase"]
+ACTION_KEYWORDS = ["create", "open", "delete", "close", "launch", "remove", "start", "exit", "make", "erase","search"]
 
 
 def execute_commands(actions, objects, text):
@@ -28,7 +28,7 @@ def execute_commands(actions, objects, text):
 
         elif action == "search":
             if objects:
-                auto.search(objects[0])
+                auto.search(objects[0],text)
             else:
                 print("⚠ No object detected for 'search'")
 

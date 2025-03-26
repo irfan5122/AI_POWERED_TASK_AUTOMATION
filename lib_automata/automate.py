@@ -30,7 +30,16 @@ def delete_file(text):
 		print("⚠ No filename found in text!")
 
 
-def search(name):
+def search(name,data):
 	import pyautogui as gui
-	gui.press('win')
-	gui.write(f"{name}")
+	import time
+	gui.FAILSAFE = False
+	index = data.find("search")
+	if index != -1:
+		search_text = data[index + len("search"):].strip()  
+  
+	time.sleep(1)
+	gui.press("tab")
+	gui.press("Enter")
+	gui.write(f"{search_text}")
+	gui.press("Enter")
