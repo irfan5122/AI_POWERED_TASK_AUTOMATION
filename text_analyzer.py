@@ -2,18 +2,22 @@ import torch
 from transformers import pipeline
 import lib_automata.automate as auto
 
-nlp = pipeline("fill-mask", model="distilroberta-base")
+# Initialize as None to indicate not loaded yet
+nlp = None
+ACTION_KEYWORDS = ["create", "open", "delete", "close", "launch", "remove", "start", "exit", "make", "erase", "search"]
 
-
-ACTION_KEYWORDS = ["create", "open", "delete", "close", "launch", "remove", "start", "exit", "make", "erase","search"]
-
+def load_model():
+    """Load the NLP model and return it"""
+    global nlp
+    if nlp is None:
+        nlp = pipeline("fill-mask", model="distilroberta-base")
+    return nlp
 
 def execute_commands(actions, objects, text):
     print("executing commands..")
     for action in actions:
         if action == "create" or action == "make":
             auto.create_file(text)
-
         elif action == "open":
             print("opening")
             print("Extracted objects:", objects)
@@ -21,19 +25,13 @@ def execute_commands(actions, objects, text):
                 auto.open_app(objects[0])
             else:
                 print("⚠ No object detected for 'open'")
-
         elif action == "delete":
             auto.delete_file(text)
-
-
         elif action == "search":
             if objects:
-                auto.search(objects[0],text)
+                auto.search(objects[0], text)
             else:
                 print("⚠ No object detected for 'search'")
-
-
-
 
 def load_app_names(filename="objects.txt"):
     try:
@@ -44,14 +42,14 @@ def load_app_names(filename="objects.txt"):
         print("❌ Error: File not found!")
         return []
 
-
-
 def process_command(text):
+    # Ensure model is loaded
+    load_model()
+    
     actions = []
     objects = []
     words = text.split()
 
- 
     for idx, word in enumerate(words):
         if word.lower() in ACTION_KEYWORDS:
             actions.append(word.lower())  
@@ -59,14 +57,10 @@ def process_command(text):
                 next_word = words[idx + 1].lower()
                 if next_word in KNOWN_OBJECTS:
                     objects.append(next_word)  
-    execute_commands(actions,objects,text)
+    
+    execute_commands(actions, objects, text)
     print("\n✅ Extracted Actions:", actions)
     print("✅ Extracted Objects:", objects)
     return actions, objects
 
-
-
 KNOWN_OBJECTS = load_app_names()
-#actions, objects = process_command(cmd)
-
-

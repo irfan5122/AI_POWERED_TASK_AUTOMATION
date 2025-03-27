@@ -1,135 +1,167 @@
 import sys
-from PyQt6.QtCore import Qt, QThread, pyqtSignal, QTimer
-from PyQt6.QtGui import QPainter, QColor
-from PyQt6.QtWidgets import QApplication, QWidget, QVBoxLayout, QLabel, QProgressBar
-import text_analyzer  # Assuming this is a module you already have
+import os
+from PyQt6.QtCore import Qt, QTimer, QThread, pyqtSignal, QPropertyAnimation
+from PyQt6.QtGui import QColor, QLinearGradient, QPainter, QFont
+from PyQt6.QtWidgets import (QApplication, QWidget, QVBoxLayout, 
+                            QLabel, QProgressBar, QGraphicsDropShadowEffect)
 
+# Suppress initial warnings
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
+import warnings
+warnings.filterwarnings("ignore")
 
-class LoadingScreen(QWidget):
-    def __init__(self):
-        super().__init__()
-
-        # Set window properties
-        self.setWindowTitle('Loading Screen')
-        self.setFixedSize(400, 300)
-        self.setStyleSheet("background-color: black; border-radius: 10px;")
-
-        # Layout
-        layout = QVBoxLayout(self)
-
-        # Title or message
-        self.loading_label = QLabel("LOADING MODEL Please Wait", self)
-        self.loading_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        self.loading_label.setStyleSheet("color: white; font-size: 20px; font-weight: bold;")
-        
-        # Progress Bar
-        self.progress_bar = QProgressBar(self)
-        self.progress_bar.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        self.progress_bar.setRange(0, 100)
-        self.progress_bar.setValue(0)
-        self.progress_bar.setStyleSheet("""
-            QProgressBar {
-                background-color: black;
-                border-radius: 5px;
-                height: 25px;
-                color: red;
-            }
-            QProgressBar::chunk {
-                background-color: cyan;
-                border-radius: 5px;
-            }
-        """)
-
-        layout.addWidget(self.loading_label)
-        layout.addWidget(self.progress_bar)
-
-        self.setLayout(layout)
-
-        # Timer to simulate loading
-        self.timer = QTimer(self)
-        self.timer.timeout.connect(self.update_loading)
-        self.timer.start(50)  # Update every 50ms
-
-        self.progress = 0  # To simulate loading progress
-
-    def update_loading(self):
-        self.progress += 1
-        if self.progress > 100:
-            self.progress = 100
-            self.timer.stop()
-        
-        self.progress_bar.setValue(self.progress)
-
-
-class ModelLoaderThread(QThread):
-    progress_signal = pyqtSignal(int)
-    model_loaded_signal = pyqtSignal()
-
-    def __init__(self):
-        super().__init__()
+class ModelLoader(QThread):
+    progress_updated = pyqtSignal(int, str)
+    loading_complete = pyqtSignal()
 
     def run(self):
-        # Simulate model loading by updating progress
-        for i in range(101):
-            self.progress_signal.emit(i)
-            # Simulate some time for loading
-            QThread.msleep(50)  # Adjust time based on real model loading time
-
-        # Now run the model loading (this should be non-blocking)
-        text_analyzer.process_command("sample")  # Replace with your actual model loading logic
+        self.progress_updated.emit(10, "Initializing system...")
         
-        # Once model is loaded, signal the main application
-        self.model_loaded_signal.emit()
+        # Import and load model after GUI is shown
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore")
+            from transformers import pipeline
+            import text_analyzer
+            
+        self.progress_updated.emit(30, "Loading AI model...")
+        text_analyzer.nlp = pipeline("fill-mask", model="distilroberta-base")
+        
+        # Simulate remaining loading
+        for progress in range(40, 101, 10):
+            QThread.msleep(200)
+            self.progress_updated.emit(progress, f"Loading components... {progress}%")
+        
+        self.loading_complete.emit()
 
-
-class MainWindow(QWidget):
+class FuturisticLoadingScreen(QWidget):
+    loading_complete = pyqtSignal()
     def __init__(self):
         super().__init__()
-        self.init_ui()
-
-    def init_ui(self):
-        # Window Settings
-        self.setWindowTitle("AI Task Automation - Main UI")
-        self.setGeometry(100, 100, 850, 550)
-        self.setStyleSheet("background-color: #121212;")  # Dark Theme
-
-        # Main Layout
-        layout = QVBoxLayout()
-        layout.setAlignment(Qt.AlignmentFlag.AlignCenter)
-
-        # Header Label
-        self.header_label = QLabel("AI Task Automation")
-        self.header_label.setFont(QFont("Arial", 24, QFont.Weight.Bold))
-        self.header_label.setStyleSheet("color: white; margin-bottom: 20px;")
-        self.header_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
-
-        layout.addWidget(self.header_label)
+        # Keep your exact UI setup
+        self.setWindowTitle("System Initialization")
+        self.setFixedSize(600, 300)
+        self.setWindowFlags(Qt.WindowType.FramelessWindowHint)
+        self.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground)
         
-        self.setLayout(layout)
+        # Main container
+        self.container = QWidget(self)
+        self.container.setGeometry(0, 0, 600, 300)
+        self.container.setStyleSheet("""
+            background-color: rgba(10, 15, 25, 220);
+            border-radius: 15px;
+            border: 1px solid rgba(100, 180, 255, 50);
+        """)
+        
+        # Add drop shadow
+        shadow = QGraphicsDropShadowEffect()
+        shadow.setBlurRadius(25)
+        shadow.setColor(QColor(100, 180, 255, 150))
+        shadow.setOffset(0, 0)
+        self.container.setGraphicsEffect(shadow)
+        
+        layout = QVBoxLayout(self.container)
+        layout.setContentsMargins(40, 40, 40, 40)
+        layout.setSpacing(30)
+        
+        # Title with animation
+        self.title = QLabel("SYSTEM INITIALIZATION")
+        self.title.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.title.setStyleSheet("""
+            color: #4fc3f7;
+            font-size: 24px;
+            font-weight: bold;
+            letter-spacing: 2px;
+        """)
+        
+        # Progress bar
+        self.progress = QProgressBar()
+        self.progress.setRange(0, 100)
+        self.progress.setTextVisible(False)
+        self.progress.setFixedHeight(12)
+        self.progress.setStyleSheet("""
+            QProgressBar {
+                background-color: rgba(30, 40, 60, 200);
+                border-radius: 6px;
+                border: 1px solid rgba(100, 180, 255, 30);
+            }
+            QProgressBar::chunk {
+                background-color: qlineargradient(
+                    spread:pad, x1:0, y1:0.5, x2:1, y2:0.5,
+                    stop:0 #00e5ff, stop:0.5 #6200ea, stop:1 #00e5ff
+                );
+                border-radius: 6px;
+            }
+        """)
+        
+        # Status text
+        self.status = QLabel("Starting system...")
+        self.status.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.status.setStyleSheet("""
+            color: rgba(200, 220, 255, 180);
+            font-size: 14px;
+            font-family: 'Consolas';
+        """)
+        
+        # Percentage indicator
+        self.percentage = QLabel("0%")
+        self.percentage.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.percentage.setStyleSheet("""
+            color: #00e5ff;
+            font-size: 18px;
+            font-weight: bold;
+        """)
+        
+        layout.addWidget(self.title)
+        layout.addWidget(self.progress)
+        layout.addWidget(self.status)
+        layout.addWidget(self.percentage)
+        
+        # Pulsing title animation
+        self.title_animation = QPropertyAnimation(self.title, b"styleSheet")
+        self.title_animation.setDuration(2000)
+        self.title_animation.setLoopCount(-1)
+        self.title_animation.setKeyValueAt(0, "color: #4fc3f7; font-size: 24px;")
+        self.title_animation.setKeyValueAt(0.5, "color: #00e5ff; font-size: 25px;")
+        self.title_animation.setKeyValueAt(1, "color: #4fc3f7; font-size: 24px;")
+        self.title_animation.start()
+        
+        # Show immediately
+        self.show()
+        QApplication.processEvents()
+        
+        # Start model loading after short delay
+        QTimer.singleShot(100, self.start_loading)
 
+    def start_loading(self):
+        self.loader = ModelLoader()
+        self.loader.progress_updated.connect(self.update_progress)
+        self.loader.loading_complete.connect(self.loading_finished)
+        self.loader.start()
 
-def main():
-    app = QApplication(sys.argv)
+    def update_progress(self, value, message):
+        self.progress.setValue(value)
+        self.percentage.setText(f"{value}%")
+        self.status.setText(message)
+        QApplication.processEvents()
 
-    # Show loading screen
-    loading_screen = LoadingScreen()
-    loading_screen.show()
+    def loading_finished(self):
+        self.close()
+        from main import ModernAdvancedUI
+        self.main_window = ModernAdvancedUI()
+        self.main_window.show()
 
-    # Create and start the model loading thread
-    loader_thread = ModelLoaderThread()
-    loader_thread.progress_signal.connect(loading_screen.progress_bar.setValue)
-    loader_thread.model_loaded_signal.connect(lambda: on_model_loaded(loading_screen))
-
-    loader_thread.start()
-
-    sys.exit(app.exec())
-
-
-def on_model_loaded(loading_screen):
-    loading_screen.close()  # Close the loading screen
-    main_window = MainWindow()
-    main_window.show()
-
+    def paintEvent(self, event):
+        painter = QPainter(self)
+        painter.setRenderHint(QPainter.RenderHint.Antialiasing)
+        gradient = QLinearGradient(0, 0, 0, self.height())
+        gradient.setColorAt(0, QColor(10, 20, 40, 150))
+        gradient.setColorAt(1, QColor(5, 10, 20, 150))
+        painter.setBrush(gradient)
+        painter.setPen(Qt.PenStyle.NoPen)
+        painter.drawRect(self.rect())
 
 if __name__ == "__main__":
-    main()
+    app = QApplication(sys.argv)
+    app.setFont(QFont("Segoe UI", 10))
+    window = FuturisticLoadingScreen()
+    app.exec()

@@ -103,41 +103,46 @@ class LoginWindow(QWidget):
         password_box = self.password_input.text().strip()
 
         if os.path.exists("user_data.apta"):
-            print("run decrypt")
             decrypt_file()
 
         if username_box and password_box:
-            credentials = {}
-            username, password = None, None
-            nofile = False
-
             try:
                 with open("user_data", "r") as file:
-                    for line in file:
-                        username, password = line.strip().split(",")
-                        credentials["username"] = username
-                        credentials["password"] = password
-                os.remove("user_data")
-            except FileNotFoundError:
-                nofile = True
-
-            if not nofile:
+                    username, password = file.readline().strip().split(",")
+                    
                 if username_box == username and password_box == password:
                     print("Logged in Successfully")
-
-                    from main import ModernAdvancedUI
-                    self.new_window = ModernAdvancedUI()  # Store the new window as an instance variable
-                    self.new_window.show()
-
-                    self.hide()  # Hide login window instead of closing it
+                    self.hide()
+                    from loading import FuturisticLoadingScreen
+                    self.loading_screen = FuturisticLoadingScreen()
+                    self.loading_screen.loading_complete.connect(self.show_main_window)
+                    self.loading_screen.show()
+                    # Load model directly (will show terminal output)
+                    #print("\nLoading AI model...")
+                    #import text_analyzer
+                    #text_analyzer.load_model()
+                    #print("Model loaded successfully!")
+                    
+                    # Launch main window
+                    #from main import ModernAdvancedUI
+                    #self.main_window = ModernAdvancedUI()
+                    #self.main_window.show()
+                    
                 else:
                     QMessageBox.warning(self, "Login Failed", "Incorrect Username or Password")
-            else:
+            except FileNotFoundError:
                 QMessageBox.warning(self, "Warning", "Account Does Not Exist!")
+            except Exception as e:
+                QMessageBox.critical(self, "Error", f"Login failed: {str(e)}")
         else:
             QMessageBox.warning(self, "Warning", "Please enter both username and password!")
 
-
+    def show_main_window(self):
+        self.loading_screen.close()
+        from main import ModernAdvancedUI
+        self.main_window = ModernAdvancedUI()
+        self.main_window.show()
+        
     def on_signup(self):
         """ Open the Create Account window """
         self.close()
