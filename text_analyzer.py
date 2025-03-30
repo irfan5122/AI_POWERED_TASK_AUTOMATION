@@ -4,7 +4,8 @@ import lib_automata.automate as auto
 
 # Initialize as None to indicate not loaded yet
 nlp = None
-ACTION_KEYWORDS = ["create", "open", "delete", "close", "launch", "remove", "start", "exit", "make", "erase", "search"]
+ACTION_KEYWORDS = ["create", "open", "delete", "close", "launch", "remove",
+                     "start", "exit", "make", "erase", "search"]
 
 def load_model():
     """Load the NLP model and return it"""
@@ -15,23 +16,32 @@ def load_model():
 
 def execute_commands(actions, objects, text):
     print("executing commands..")
-    for action in actions:
-        if action == "create" or action == "make":
-            auto.create_file(text)
-        elif action == "open":
-            print("opening")
-            print("Extracted objects:", objects)
-            if objects:
-                auto.open_app(objects[0])
-            else:
-                print("⚠ No object detected for 'open'")
-        elif action == "delete":
-            auto.delete_file(text)
-        elif action == "search":
-            if objects:
-                auto.search(objects[0], text)
-            else:
-                print("⚠ No object detected for 'search'")
+
+    try:
+        for action in actions:
+            if action == "create" or action == "make":
+                auto.create_file(text)
+            elif action == "open":
+                print("opening")
+                print("Extracted objects:", objects)
+                if objects:
+                    auto.open_app(objects[0])
+                else:
+                    print("⚠ No object detected for 'open'")
+            elif action == "delete":
+                auto.delete_file(text)
+            elif action == "search":
+                if objects:
+                    auto.search(objects[0], text)
+                else:
+                    print("⚠ No object detected for 'search'")
+
+            elif action == "close":
+                auto.close_app(objects[0])
+    except Exception:
+        print("Command Error")
+
+        
 
 def load_app_names(filename="objects.txt"):
     try:

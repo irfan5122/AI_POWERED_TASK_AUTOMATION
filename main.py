@@ -120,13 +120,12 @@ class ModernAdvancedUI(QWidget):
         if message.strip():
             print(f"📌 Task Received: {message}")
             import text_analyzer
-
             actions, objects = text_analyzer.process_command(message)
 
 
         else:
             print("⚠ No task entered!")
-
+    
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

@@ -3,3 +3,6 @@ delete
 opening apps
 searching
 encryption
+closing apps
+opening chrome and searching 
+loading bar
