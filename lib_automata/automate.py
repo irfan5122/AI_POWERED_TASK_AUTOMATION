@@ -95,3 +95,14 @@ def close_app(app_name):
 
         except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
             continue  # Skip inaccessible or terminated processes
+        
+def shutdown_system():
+    from tkinter import messagebox,Tk
+    root = Tk()
+    root.withdraw()
+    root.attributes("-topmost", True)  # Ensures the message box appears on top
+
+    response = messagebox.askyesno("Shutdown Confirmation", "Are you sure you want to shut down?")
+    
+    if response:
+        os.system("shutdown /s /t 0")

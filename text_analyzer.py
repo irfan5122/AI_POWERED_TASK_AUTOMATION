@@ -5,7 +5,7 @@ import lib_automata.automate as auto
 # Initialize as None to indicate not loaded yet
 nlp = None
 ACTION_KEYWORDS = ["create", "open", "delete", "close", "launch", "remove",
-                     "start", "exit", "make", "erase", "search"]
+                     "start", "exit", "make", "erase", "search","shutdown"]
 
 def load_model():
     """Load the NLP model and return it"""
@@ -38,6 +38,9 @@ def execute_commands(actions, objects, text):
 
             elif action == "close":
                 auto.close_app(objects[0])
+
+            elif action == "shutdown":
+                auto.shutdown_system()
     except Exception:
         print("Command Error")
 
