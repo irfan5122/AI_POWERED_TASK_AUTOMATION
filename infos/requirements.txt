@@ -3,3 +3,5 @@ cryptography
 pyautogui
 transformers
 torch
+SpeechRecognition
+pyaudio
