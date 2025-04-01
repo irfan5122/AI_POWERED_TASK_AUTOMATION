@@ -7,3 +7,4 @@ closing apps
 opening chrome and searching 
 loading bar
 voice function
+shutdown
