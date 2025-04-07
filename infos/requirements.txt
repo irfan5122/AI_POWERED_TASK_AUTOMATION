@@ -1,7 +1,7 @@
-PyQt6
-cryptography
-pyautogui
-transformers
-torch
-SpeechRecognition
-pyaudio
+PyQt6==6.8.1
+cryptography==44.0.2
+pyautogui==0.9.54
+transformers==4.34.0
+torch==2.2.1
+SpeechRecognition==3.14.2
+pyaudio==0.2.14
