@@ -117,16 +117,7 @@ class LoginWindow(QWidget):
                     self.loading_screen = FuturisticLoadingScreen()
                     self.loading_screen.loading_complete.connect(self.show_main_window)
                     self.loading_screen.show()
-                    # Load model directly (will show terminal output)
-                    #print("\nLoading AI model...")
-                    #import text_analyzer
-                    #text_analyzer.load_model()
-                    #print("Model loaded successfully!")
                     
-                    # Launch main window
-                    #from main import ModernAdvancedUI
-                    #self.main_window = ModernAdvancedUI()
-                    #self.main_window.show()
                     
                 else:
                     QMessageBox.warning(self, "Login Failed", "Incorrect Username or Password")
@@ -244,7 +235,6 @@ class SignupWindow(QWidget):
         password = self.password_input.text().strip()
 
         if username and password:
-            #print(f"Account Created: Username - {username}, Password - {password}")
 
             filename = "user_data.apta"
             if not os.path.exists(filename):
@@ -275,7 +265,6 @@ class SignupWindow(QWidget):
         self.login_window = LoginWindow()
         self.login_window.show()
 
-# Determine which window to show
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     flag = 0  

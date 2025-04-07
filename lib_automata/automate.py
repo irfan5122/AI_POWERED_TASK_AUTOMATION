@@ -1,5 +1,8 @@
 import os
 import re
+import time
+import pyautogui as gui
+
 def create_file(text):
 	pattern = r'\b\w+\.\w+\b'
 	filename_list = re.findall(pattern, text)
@@ -13,10 +16,10 @@ def create_file(text):
     
 
 def open_app(app_name):
-	import pyautogui as gui
-	gui.press('win')
-	gui.write(f"{app_name}")
-	gui.press("Enter")
+    gui.press('win')
+    gui.write(f"{app_name}")
+    time.sleep(1.5)
+    gui.press("Enter")
 
 def delete_file(text):
 	pattern = r'\b\w+\.\w+\b'
@@ -31,14 +34,12 @@ def delete_file(text):
 
 
 def search(name,data):
-	import pyautogui as gui
-	import time
 	gui.FAILSAFE = False
 	index = data.find("search")
 	if index != -1:
 		search_text = data[index + len("search"):].strip()  
   
-	time.sleep(1)
+	time.sleep(2)
 	gui.press("tab")
 	gui.press("Enter")
 	gui.write(f"{search_text}")
